@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import data from '../mocks';
 
 interface CovidCase {
   id: number;
@@ -17,10 +16,10 @@ export const casesFunction = {
 
     const { date } = req.query;
 
-    const cases = await data.find({});
+    // const cases = await data.find({});
 
-    console.log(cases);
+    // console.log(cases);
 
-    return res.json(cases);
+    // return res.json(cases);
   },
 };

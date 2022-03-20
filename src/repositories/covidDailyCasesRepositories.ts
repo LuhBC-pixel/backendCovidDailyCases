@@ -14,12 +14,3 @@ export const covidCasesModel = mongoose.model<CovidCase>(
   'covidCases',
   covidCasesSchema
 );
-
-export let covidDailyCasesRepositories: mongoose.Document<
-  unknown,
-  any,
-  CovidCase
-> &
-  CovidCase & {
-    _id: mongoose.Types.ObjectId;
-  };

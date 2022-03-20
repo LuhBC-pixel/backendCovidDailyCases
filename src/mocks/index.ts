@@ -1,10 +1,9 @@
 import csv from 'csv-parser';
 import fs from 'fs';
-import {
-  covidCasesModel,
-  covidDailyCasesRepositories,
-} from '../repositories/covidDailyCasesRepositories';
+import { covidCasesModel } from '../repositories/covidDailyCasesRepositories';
 import { dbConnect } from '../services/database';
+import format from 'date-fns/format';
+import { ptBR } from 'date-fns/locale';
 
 export async function run(): Promise<void> {
   await dbConnect();
@@ -21,16 +20,21 @@ export async function run(): Promise<void> {
         perc_sequences,
         num_sequences_total,
       } = row;
-      covidDailyCasesRepositories = new covidCasesModel({
+
+      const newDate = format(new Date(date), 'yyyy-MM-dd', {
+        locale: ptBR,
+      });
+
+      const covidDailyCases = new covidCasesModel({
         id,
         location,
-        date,
+        newDate,
         variant,
         num_sequences,
         perc_sequences,
         num_sequences_total,
       });
-      covidDailyCasesRepositories
+      covidDailyCases
         .save()
         .then((response: any) => console.log('cadastrado com sucesso'))
         .catch((err: any) => console.log(err));
@@ -41,5 +45,3 @@ export async function run(): Promise<void> {
 }
 
 run();
-
-export default covidDailyCases;
